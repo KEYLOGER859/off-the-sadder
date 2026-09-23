@@ -3,7 +3,7 @@ import { gsap } from "@/lib/gsap";
 
 const LINKS = ["Chronicle", "Makers", "Journal", "About", "Contact"];
 
-export const MenuOverlay = ({ open, onClose }) => {
+export const MenuOverlay = ({ open, onClose, onContact }) => {
   const ref = useRef(null);
   const first = useRef(true);
 
@@ -39,7 +39,7 @@ export const MenuOverlay = ({ open, onClose }) => {
       </button>
       <nav className="menu__nav">
         {LINKS.map((l, i) => (
-          <a key={l} href="#" className={`menu__link ${i === 0 ? "is-current" : ""}`} data-testid={`menu-link-${l.toLowerCase()}`} data-cursor="link" onClick={(e) => { e.preventDefault(); onClose(); }}>
+          <a key={l} href="#" className={`menu__link ${i === 0 ? "is-current" : ""}`} data-testid={`menu-link-${l.toLowerCase()}`} data-cursor="link" onClick={(e) => { e.preventDefault(); onClose(); if (l === "Contact") onContact(); }}>
             <span className="menu__num">0{i + 1}</span>
             <span className="menu__line"><span className="menu__line-inner">{l}</span></span>
           </a>

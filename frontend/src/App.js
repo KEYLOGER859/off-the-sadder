@@ -8,6 +8,7 @@ import { Cursor } from "@/components/Cursor";
 import { ProductView } from "@/components/ProductView";
 import { MenuOverlay } from "@/components/MenuOverlay";
 import { BagDrawer } from "@/components/BagDrawer";
+import { ContactOverlay } from "@/components/ContactOverlay";
 
 export default function App() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -16,6 +17,7 @@ export default function App() {
   const [dimmed, setDimmed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const [bag, setBag] = useState([]);
   const exhibitionRef = useRef(null);
 
@@ -53,7 +55,7 @@ export default function App() {
         onOpen={openProduct}
         onActiveChange={setActiveIndex}
         onDragChange={setDragging}
-        dimmed={dimmed || menuOpen || bagOpen}
+        dimmed={dimmed || menuOpen || bagOpen || contactOpen}
       />
       <BottomUI index={activeIndex} total={products.length} dragging={dragging} hidden={!!viewing} />
       {viewing && (
@@ -68,8 +70,9 @@ export default function App() {
           onNavigate={navigate}
         />
       )}
-      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} onContact={() => setContactOpen(true)} />
       <BagDrawer open={bagOpen} bag={bag} onClose={() => setBagOpen(false)} onRemove={removeFromBag} />
+      <ContactOverlay open={contactOpen} onClose={() => setContactOpen(false)} />
       <Cursor dragging={dragging} />
     </div>
   );

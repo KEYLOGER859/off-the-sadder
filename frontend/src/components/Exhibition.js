@@ -3,6 +3,8 @@ import Lenis from "lenis";
 import { gsap, Draggable } from "@/lib/gsap";
 import { ExhibitionObject } from "@/components/ExhibitionObject";
 
+const TILT = -6; // resting card tilt (deg); straightens on hover
+
 export const Exhibition = forwardRef(function Exhibition(
   { products, onOpen, onActiveChange, onDragChange, dimmed },
   ref
@@ -15,7 +17,6 @@ export const Exhibition = forwardRef(function Exhibition(
   const imgRefs = useRef([]);
   const lenisRef = useRef(null);
   const dragRef = useRef(null);
-  const layoutRef = useRef([]);
   const activeRef = useRef(0);
   const dimmedRef = useRef(false);
   const glideRef = useRef(() => {});
@@ -28,6 +29,7 @@ export const Exhibition = forwardRef(function Exhibition(
 
   useEffect(() => {
     const items = itemRefs.current;
+    const depths = products.map((p) => p.layout.speed);
     const lenis = new Lenis({
       orientation: "horizontal",
       gestureOrientation: "both",
@@ -36,31 +38,32 @@ export const Exhibition = forwardRef(function Exhibition(
       smoothWheel: true,
       syncTouch: false,
       touchMultiplier: 0,
+      infinite: true,
       autoRaf: false,
     });
     lenisRef.current = lenis;
 
-    let layout = [];
+    let positions = [];
+    let step = 0;
+    let totalWidth = 0;
+    let cardW = 0;
+
     const measure = () => {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const cardH = Math.min(vh * 0.66, vh - 176);
-      const cardW = cardH * 0.72;
-      const gap = Math.max(vw * 0.05, 56);
-      const padL = Math.max(vw * 0.07, 44);
-      const padR = Math.max(vw * 0.12, 120);
+      const cardH = Math.min(vh * 0.62, vh - 180);
+      cardW = cardH * 0.72;
+      const gap = Math.max(vw * 0.055, 64);
+      step = cardW + gap;
+      totalWidth = products.length * step;
       const cy = (vh - cardH) / 2 - vh * 0.01;
-      let limit = 0;
-      layout = products.map((p, i) => {
-        const x = padL + i * (cardW + gap);
-        gsap.set(items[i], { width: cardW, height: cardH, y: cy });
-        limit = Math.max(limit, x + cardW + padR - vw);
-        return { x, w: cardW, y: cy, depth: p.layout.speed };
+      positions = products.map((_, i) => {
+        gsap.set(items[i], { width: cardW, height: cardH, y: cy, rotation: TILT });
+        return i * step;
       });
-      layoutRef.current = layout;
-      spacerRef.current.style.width = `${Math.ceil(vw + Math.max(limit, 0))}px`;
+      // reserve scroll space so lenis wrap period === totalWidth
+      spacerRef.current.style.width = `${Math.ceil(vw + totalWidth)}px`;
       lenis.resize();
-      dragRef.current?.applyBounds({ minX: -lenis.limit, maxX: 0 });
     };
     measure();
 
@@ -79,18 +82,18 @@ export const Exhibition = forwardRef(function Exhibition(
       if (d && !d.isPressed && !d.isDragging && !d.isThrowing) gsap.set(proxyRef.current, { x: -s });
       let best = 0;
       let bestDist = Infinity;
-      layout.forEach((l, i) => {
-        const sx = l.x - s;
-        xSet[i](sx);
+      for (let i = 0; i < positions.length; i++) {
+        const x = gsap.utils.wrap(-step, totalWidth - step, positions[i] - s);
+        xSet[i](x);
         skewSet[i](skew);
-        const rel = (sx + l.w / 2 - vw / 2) / vw;
-        imgSet[i](gsap.utils.clamp(-1.25, 1.25, rel) * l.w * -0.14 * l.depth);
+        const rel = (x + cardW / 2 - vw / 2) / vw;
+        imgSet[i](gsap.utils.clamp(-1.25, 1.25, rel) * cardW * -0.14 * depths[i]);
         const dist = Math.abs(rel);
         if (dist < bestDist) {
           bestDist = dist;
           best = i;
         }
-      });
+      }
       ghostSet(-s * 0.4);
       if (best !== active) {
         active = best;
@@ -106,11 +109,9 @@ export const Exhibition = forwardRef(function Exhibition(
       trigger: stageRef.current,
       inertia: true,
       allowNativeTouchScrolling: false,
-      edgeResistance: 0.85,
       throwResistance: 1400,
-      maxDuration: 1.8,
+      maxDuration: 2.2,
       minimumMovement: 4,
-      bounds: { minX: -lenis.limit, maxX: 0 },
       onPress() {
         lenis.scrollTo(lenis.scroll, { immediate: true, force: true });
         gsap.set(this.target, { x: -lenis.scroll });
@@ -133,21 +134,20 @@ export const Exhibition = forwardRef(function Exhibition(
     });
     dragRef.current = draggable;
 
-    // glide to a given object index, centering it (momentum by default)
+    // glide to center a given object index (momentum by default, shortest path)
     glideRef.current = (index, opts = {}) => {
-      const l = layoutRef.current[index];
-      if (!l) return;
+      if (!positions.length) return;
       const vw = window.innerWidth;
-      const target = gsap.utils.clamp(0, lenis.limit, l.x + l.w / 2 - vw / 2);
+      const want = positions[index] - (vw - cardW) / 2;
+      const s = lenis.scroll;
+      let delta = (((want - s) % totalWidth) + totalWidth) % totalWidth;
+      if (delta > totalWidth / 2) delta -= totalWidth;
+      const target = s + delta;
       if (opts.immediate) {
         lenis.scrollTo(target, { immediate: true, force: true });
         gsap.set(proxyRef.current, { x: -target });
       } else {
-        lenis.scrollTo(target, {
-          duration: 1.15,
-          force: true,
-          easing: (t) => 1 - Math.pow(1 - t, 3),
-        });
+        lenis.scrollTo(target, { duration: 1.15, force: true, easing: (t) => 1 - Math.pow(1 - t, 3) });
       }
     };
 
@@ -155,10 +155,10 @@ export const Exhibition = forwardRef(function Exhibition(
       if (dimmedRef.current) return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        glideRef.current(Math.min(activeRef.current + 1, products.length - 1));
+        glideRef.current(activeRef.current + 1 >= products.length ? 0 : activeRef.current + 1);
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
-        glideRef.current(Math.max(activeRef.current - 1, 0));
+        glideRef.current(activeRef.current - 1 < 0 ? products.length - 1 : activeRef.current - 1);
       }
     };
     window.addEventListener("keydown", onKey);
@@ -167,8 +167,8 @@ export const Exhibition = forwardRef(function Exhibition(
     intro
       .fromTo(
         items,
-        { y: (i) => layout[i].y + 84, opacity: 0 },
-        { y: (i) => layout[i].y, opacity: 1, duration: 1.9, stagger: 0.08, ease: "expo.out" }
+        { yPercent: 14, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 1.9, stagger: 0.08, ease: "expo.out" }
       )
       .fromTo(ghostRef.current, { opacity: 0, yPercent: 18 }, { opacity: 1, yPercent: 0, duration: 2.2 }, 0.3);
 
@@ -189,7 +189,8 @@ export const Exhibition = forwardRef(function Exhibition(
       const isHover = products[i].id === hoverId;
       el.classList.toggle("is-hover", isHover);
       gsap.to(el, {
-        scale: isHover ? 1.04 : 1,
+        scale: isHover ? 1.05 : 1,
+        rotation: isHover ? 0 : TILT,
         opacity: hoverId && !isHover ? 0.3 : 1,
         zIndex: isHover ? 60 : 10,
         duration: 1.1,
@@ -226,9 +227,6 @@ export const Exhibition = forwardRef(function Exhibition(
         <div ref={ghostRef} className="ex-ghost" aria-hidden>
           Chronicle
         </div>
-        <p className="ex-caption" aria-hidden>
-          Chronicle 01 — Eight objects — Made by hand across India
-        </p>
         {products.map((p, i) => (
           <ExhibitionObject
             key={p.id}

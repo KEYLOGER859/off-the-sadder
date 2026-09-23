@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { formatPrice, pad } from "@/data/products";
+import { pad } from "@/data/products";
 
 export const ExhibitionObject = forwardRef(function ExhibitionObject(
   { product, index, imgRef, onHover },
@@ -19,8 +19,6 @@ export const ExhibitionObject = forwardRef(function ExhibitionObject(
       <div className="obj__frame">
         <img ref={imgRef} className="obj__img" src={product.image} alt={product.name} draggable={false} />
         <div className="obj__scrim" aria-hidden />
-        <div className="obj__reel obj__reel--top" aria-hidden />
-        <div className="obj__reel obj__reel--bottom" aria-hidden />
         <div className="obj__tag" data-testid={`object-tag-${product.id}`}>
           <span className="obj__tag-num">{pad(index + 1)}</span>
           <span className="obj__tag-place">{product.place}</span>
@@ -32,7 +30,6 @@ export const ExhibitionObject = forwardRef(function ExhibitionObject(
         </div>
         <div className="obj__details">
           <span>{product.material}</span>
-          <span className="obj__price">{formatPrice(product.price)}</span>
         </div>
       </div>
     </article>
