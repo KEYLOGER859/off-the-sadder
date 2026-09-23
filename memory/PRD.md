@@ -23,8 +23,19 @@ Build an original interactive marketplace ("OBJECTS") for the artisan jewellery 
 - Cinematic product view with masked title reveal, specs, story, price, ADD TO BAG → header bag count
 - Menu overlay, bottom counter + drag cue, intro animation
 
+## Implemented (Sept 2026 — "Chronicle" film-reel redesign)
+- Renamed exhibition concept "Objects" → "Chronicle" (ghost word, header title, menu link 01, product-view eyebrow)
+- Aligned FILM-REEL layout: uniform tall portrait cards in a horizontal row, each framed with film-strip perforation borders (top & bottom sprocket holes) + bottom scrim; persistent top-left tag (number + place)
+- Big elegant serif (Instrument Serif) product-name reveal on hover with masked slide-in animation + details fade-in; non-hovered cards dim
+- Stronger multi-depth image parallax on horizontal scroll
+- Bottom "chronicle pager" bar `[ 01 02 … 08 ]` highlighting active object (boxed) + progress line, updates on scroll
+- Product view PREV / NEXT navigation (buttons + ArrowLeft/Right keys) — cyclic, swap-in animation, no full close; underlying exhibition glides (immediate) to keep close-morph on-screen
+- BAG drawer: slide-in panel listing added items (thumb/name/place/price), Remove, running Total, Checkout (disabled when empty), empty state; Escape/backdrop/close to dismiss
+- Keyboard exploration: Left/Right arrow keys glide the exhibition object-to-object with momentum (via Exhibition.glideTo imperative handle)
+- Hardened ProductView.close against stale/detached sourceEl (graceful fade fallback)
+- Verified via testing agent: iteration_2.json — 13/13 frontend flows passed (100%)
+
 ## Backlog
-- P1: Prev/Next object navigation inside product view; keyboard arrows on stage
-- P1: Bag drawer listing items
 - P2: Touch/mobile fine-tuning; reduced-motion mode
 - P2: Backend product API + admin
+- P2: Functional checkout (currently visual); Footer; Homepage/About/Journal/Stories pages

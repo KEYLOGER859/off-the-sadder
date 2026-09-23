@@ -12,6 +12,7 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
   const [added, setAdded] = useState(false);
 
   const sourceTransform = () => {
+    if (!sourceEl || !sourceEl.isConnected) return null;
     const r = sourceEl.getBoundingClientRect();
     const t = frameRef.current.getBoundingClientRect();
     const scale = gsap.getProperty(sourceEl, "scale") || 1;
@@ -64,11 +65,16 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
     if (closingRef.current) return;
     closingRef.current = true;
     onExitStart();
+    const src = sourceTransform();
     const tl = gsap.timeline({ onComplete: onClosed });
     tl.to(infoRef.current, { opacity: 0, y: -10, duration: 0.45, ease: "power2.in" }, 0)
-      .to(frameRef.current, { ...sourceTransform(), duration: 1.1, ease: "expo.inOut" }, 0.05)
-      .to(rootRef.current, { "--pv-bg": 0, duration: 0.8, ease: "power2.inOut" }, 0.3)
-      .to(frameRef.current, { opacity: 0, duration: 0.3 }, 0.95);
+      .to(rootRef.current, { "--pv-bg": 0, duration: 0.8, ease: "power2.inOut" }, 0.3);
+    if (src) {
+      tl.to(frameRef.current, { ...src, duration: 1.1, ease: "expo.inOut" }, 0.05)
+        .to(frameRef.current, { opacity: 0, duration: 0.3 }, 0.95);
+    } else {
+      tl.to(frameRef.current, { opacity: 0, scale: 0.94, duration: 0.6, ease: "power2.in" }, 0.1);
+    }
   };
 
   useEffect(() => {
