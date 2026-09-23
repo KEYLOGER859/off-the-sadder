@@ -35,6 +35,17 @@ Build an original interactive marketplace ("OBJECTS") for the artisan jewellery 
 - Hardened ProductView.close against stale/detached sourceEl (graceful fade fallback)
 - Verified via testing agent: iteration_2.json — 13/13 frontend flows passed (100%)
 
+## Implemented (Sept 2026 — refinement round 2)
+- Exhibition cards now TILTED (~-6°, uniform) and straighten upright on hover (elegant "align to view")
+- Removed the film-reel perforation border → clean, boundary-less cards (more elegant per user)
+- Removed the rotated "made by hand across India" caption (was overlapping the bottom bar)
+- PRICE hidden on hover (hover reveals only big serif name + material); price shown ONLY in the product detail modal
+- Fixed clipped/misaligned hover name (inline-block mask, no horizontal clipping) + product-view title descender clipping
+- INFINITE horizontal loop: seamless wrap-around via drag, wheel and arrow keys (Lenis {infinite:true} + gsap.utils.wrap positioning; glideTo shortest-path centering)
+- Cleaned up bottom chronicle pager bar
+- NEW creative Contact page (full-screen overlay, on-theme) opened from Menu "Contact": big serif headline "Let's make something that lasts.", studio/email/instagram details, minimal underlined form with graceful visual thank-you state
+- Verified via testing agent: iteration_3.json — 13/13 frontend flows passed (100%)
+
 ## Backlog
 - P2: Touch/mobile fine-tuning; reduced-motion mode
 - P2: Backend product API + admin

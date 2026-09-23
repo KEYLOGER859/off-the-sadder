@@ -1,0 +1,21 @@
+{
+  "summary": "Frontend-only regression test for OFF THE SADDLE Chronicle exhibition after infinite-loop rewrite + tilt + contact page. All 13 requested flows PASS. App loads with 8 tilted portrait cards, hover shows big serif name + material with NO price, wheel-scrolled 30x remains populated (infinite loop OK), product detail modal shows price ₹6,800/₹24,000 etc, next/prev buttons and ArrowRight/ArrowLeft cycle products correctly and wrap around (Ember Cuff -> ... -> Tendril -> Ember Cuff after 8 nexts), add-to-bag increments header bag count to 01, modal closes on Escape (animation ~1.4s) and on close button, bag drawer lists items with total ₹24,000, Remove button in viewport at x=1593 works, Checkout disabled when empty, backdrop/Escape close bag, ArrowRight with nothing open advances pager (03 -> 04, .bottom__pg.is-active), Menu overlay first link 'Chronicle' present, Contact overlay opens from menu-link-contact with title 'Let\u2019s make something that lasts.', form submit shows contact-sent-message, Escape closes contact. Zero console errors across all flows.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Modal close animation is ~1.4s (opacity fade + frame morph). Not a bug, but worth noting for automation: allow >=1.5s before asserting modal removal after Escape/close.",
+    "BottomUI pager items are <span> not <button>; if keyboard focus/click on individual page numbers is ever desired, they will need role=button + tabindex."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped)", "frontend": "100% (13/13 flows)"},
+  "seed_data_creation": "None (frontend-only static data)",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All requested regression checks passed. Key gotchas for future runs: (a) Modal close animation is ~1.4s -- use >=1.5s wait after Escape before asserting modal unmount; (b) Chronicle pager uses <span class='bottom__pg is-active'> (not button) -- select via [data-testid=\"chronicle-pager\"] .bottom__pg.is-active; (c) Custom cursor requires force=True on all clicks; (d) Playwright may report bag-remove-0 as 'outside viewport' due to CSS transform/positioning during the drawer slide-in animation -- add ~700ms wait after opening bag drawer, or use JS click as fallback. Prices verified: Ember 6800, Fault Line 24000, Kiln 3400, Bastar 5200, Rann 4600, Anvil 12500, Smoke Glass 7900, Tendril 3900."
+}
