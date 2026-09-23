@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --ink: #0d0d0d;
+    --ink-2: #141414;
+    --bone: #f4f1ea;
+    --bone-2: #a3a099;
+    --bone-3: #66645f;
+    --rust: #c4653a;
+    --rust-2: #d15a2a;
+    --line: rgba(244, 241, 234, 0.1);
+    --font-display: "Instrument Serif", Georgia, serif;
+    --font-mono: "DM Mono", "SFMono-Regular", Menlo, monospace;
+}
+
+html {
+    overflow-y: hidden;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+html,
+body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--bone);
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-mono);
+    overscroll-behavior: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body,
+    body * {
+        cursor: none !important;
+    }
+}
+
+::selection {
+    background: var(--rust);
+    color: var(--ink);
+}
+
+img {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+@layer base {
+    :root {
+        --background: 0 0% 5%;
+        --foreground: 40 30% 94%;
+        --border: 0 0% 15%;
+        --input: 0 0% 15%;
+        --ring: 20 55% 50%;
+        --radius: 0px;
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+}

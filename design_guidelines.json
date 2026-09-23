@@ -1,0 +1,206 @@
+{
+  "brand": {
+    "name": "OFF THE SADDLE",
+    "concept": "Interactive digital exhibition for an artisan jewellery brand. Contemporary Indian visual identity, tactile, raw, editorial art direction.",
+    "tagline": "OBJECTS — Spatial Exhibition of Artisan Craft",
+    "app_type": "immersive_interactive_marketplace"
+  },
+  "color_palette": {
+    "theme": "Dark Editorial",
+    "background_primary": "#0D0D0D",
+    "background_secondary": "#141414",
+    "background_overlay": "rgba(13, 13, 13, 0.92)",
+    "text_primary": "#F4F1EA",
+    "text_secondary": "#A3A099",
+    "text_muted": "#66645F",
+    "accent_rust": "#C4653A",
+    "accent_rust_hover": "#D15A2A",
+    "accent_rust_subtle": "rgba(196, 101, 58, 0.15)",
+    "border_subtle": "rgba(244, 241, 234, 0.08)",
+    "border_active": "rgba(196, 101, 58, 0.4)",
+    "forbidden_elements": [
+      "gradients",
+      "glassmorphism",
+      "heavy shadows",
+      "rounded cards (max 0px or 2px corner)",
+      "traditional gold luxury cliché",
+      "Indian ornate motifs/clichés"
+    ]
+  },
+  "typography": {
+    "heading_font": "Cormorant Garamond, serif",
+    "body_font": "Space Grotesk, sans-serif",
+    "metadata_font": "JetBrains Mono, monospace",
+    "google_fonts_import": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500&display=swap",
+    "text_hierarchy": {
+      "display_large": "font-serif text-5xl md:text-7xl font-light tracking-tight text-[#F4F1EA]",
+      "product_title": "font-serif text-3xl md:text-5xl font-normal text-[#F4F1EA]",
+      "section_label": "font-mono text-xs uppercase tracking-[0.25em] text-[#C4653A]",
+      "metadata_tiny": "font-mono text-[10px] sm:text-xs tracking-widest text-[#A3A099] uppercase",
+      "price_tag": "font-mono text-sm sm:text-base font-normal text-[#F4F1EA]",
+      "body_editorial": "font-sans text-sm sm:text-base leading-relaxed text-[#A3A099] font-light"
+    }
+  },
+  "spatial_exhibition_layout": {
+    "mode": "Horizontal Dragging Canvas (GSAP Draggable / Lenis)",
+    "canvas_dimensions": "320vw width on desktop, 100vh height fixed overflow-hidden",
+    "object_count": 8,
+    "parallax_depth_layers": [
+      {"layer": 1, "speed": 0.6, "scale": 0.85, "z_index": 10},
+      {"layer": 2, "speed": 1.0, "scale": 1.0, "z_index": 20},
+      {"layer": 3, "speed": 1.4, "scale": 1.25, "z_index": 30}
+    ],
+    "object_placement_matrix": [
+      {
+        "id": "obj-01",
+        "name": "KOR-01 / MANIFOLD CUFF",
+        "place": "JAIPUR / RAJASTHAN",
+        "material": "RECYCLED BRASS & RAW UNCUT QUARTZ",
+        "price": "₹ 28,500",
+        "maker": "Umaid Ram & Studio OTS",
+        "story": "Hand-forged over charcoal pits in Jaipur, this cuff translates structural brutalism into wearable weight.",
+        "x_position": "8vw",
+        "y_position": "18vh",
+        "rotation": "-8deg",
+        "parallax_layer": 2,
+        "aspect_ratio": "3/4",
+        "image": "https://images.unsplash.com/photo-1550368566-f9cc32d7392d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwc2lsdmVyJTIwZ29sZCUyMGhhbmRtYWRlJTIwamV3ZWxyeSUyMHN0dWRpbyUyMGVkaXRvcmlhbCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc5MDE2ODcwNHww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "obj-02",
+        "name": "SAD-02 / TECTONIC CHOKER",
+        "place": "HAMPI / KARNATAKA",
+        "material": "OXIDISED STERLING SILVER",
+        "price": "₹ 42,000",
+        "maker": "Giri Raj & OFF THE SADDLE",
+        "story": "Inspired by the boulder fields of Hampi. Chiseled facets catch low grazing light across dark skin.",
+        "x_position": "42vw",
+        "y_position": "45vh",
+        "rotation": "12deg",
+        "parallax_layer": 3,
+        "aspect_ratio": "4/5",
+        "image": "https://images.unsplash.com/photo-1765064067375-44f565f19b92?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHw0fHxhcnRpc2FuJTIwc2lsdmVyJTIwZ29sZCUyMGhhbmRtYWRlJTIwamV3ZWxyeSUyMHN0dWRpbyUyMGVkaXRvcmlhbCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc5MDE2ODcwNHww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "obj-03",
+        "name": "LUN-03 / ECLIPSE TALISMAN",
+        "place": "ALMORA / UTTARAKHAND",
+        "material": "SMOKY QUARTZ & HAMMERED COPPER",
+        "price": "₹ 19,800",
+        "maker": "Devi Lal",
+        "story": "High altitude copper smithing. Each facet is struck by hand without mold or gauge.",
+        "x_position": "82vw",
+        "y_position": "12vh",
+        "rotation": "-4deg",
+        "parallax_layer": 1,
+        "aspect_ratio": "1/1",
+        "image": "https://images.unsplash.com/photo-1767381819098-4beaccc15a63?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwyfHxhcnRpc2FuJTIwc2lsdmVyJTIwZ29sZCUyMGhhbmRtYWRlJTIwamV3ZWxyeSUyMHN0dWRpbyUyMGVkaXRvcmlhbCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc5MDE2ODcwNHww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "obj-04",
+        "name": "RHO-04 / STRATA SIGNET",
+        "place": "BHUJ / GUJARAT",
+        "material": "CAST BRONZE & BLACK OBSIDIAN",
+        "price": "₹ 22,500",
+        "maker": "Kutch Metal Guild",
+        "story": "Lost-wax cast utilizing indigenous Kutchi clay molds. Dense, heavy, tactile geometry.",
+        "x_position": "118vw",
+        "y_position": "52vh",
+        "rotation": "15deg",
+        "parallax_layer": 2,
+        "aspect_ratio": "3/4",
+        "image": "https://images.pexels.com/photos/14608088/pexels-photo-14608088.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "id": "obj-05",
+        "name": "VER-05 / SOLITUDE ORB EARRINGS",
+        "place": "MADURAI / TAMIL NADU",
+        "material": "HOLLOWED BRASS & GARNET",
+        "price": "₹ 31,000",
+        "maker": "Meenakshi Artisans",
+        "story": "A study in weightlessness and resonance. Hollow spheres spun by traditional metal lathe.",
+        "x_position": "158vw",
+        "y_position": "22vh",
+        "rotation": "-10deg",
+        "parallax_layer": 3,
+        "aspect_ratio": "4/5",
+        "image": "https://images.unsplash.com/photo-1765064067555-3a9e7b4d338c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwzfHxhcnRpc2FuJTIwc2lsdmVyJTIwZ29sZCUyMGhhbmRtYWRlJTIwamV3ZWxyeSUyMHN0dWRpbyUyMGVkaXRvcmlhbCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc5MDE2ODcwNHww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "obj-06",
+        "name": "SAD-06 / NOMAD ARCH PIN",
+        "place": "PUSHKAR / RAJASTHAN",
+        "material": "WHITE COPPER & UNPOLISHED TURQUOISE",
+        "price": "₹ 17,200",
+        "maker": "Thakur Singh",
+        "story": "Forged for heavy outerwear. Pin mechanism inspired by desert saddle hardware.",
+        "x_position": "195vw",
+        "y_position": "48vh",
+        "rotation": "6deg",
+        "parallax_layer": 1,
+        "aspect_ratio": "3/4",
+        "image": "https://images.pexels.com/photos/34151758/pexels-photo-34151758.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "id": "obj-07",
+        "name": "MON-07 / BASALT TORC",
+        "place": "LEH / LADAKH",
+        "material": "PATINATED SILVER & RAW IRON",
+        "price": "₹ 54,000",
+        "maker": "Stanzin & Studio OTS",
+        "story": "Cold-forged iron fused with 925 silver. Severe mountain brutalism.",
+        "x_position": "235vw",
+        "y_position": "15vh",
+        "rotation": "-14deg",
+        "parallax_layer": 2,
+        "aspect_ratio": "1/1",
+        "image": "https://images.unsplash.com/photo-1550368566-f9cc32d7392d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwc2lsdmVyJTIwZ29sZCUyMGhhbmRtYWRlJTIwamV3ZWxyeSUyMHN0dWRpbyUyMGVkaXRvcmlhbCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc5MDE2ODcwNHww&ixlib=rb-4.1.0&q=85"
+      },
+      {
+        "id": "obj-08",
+        "name": "OTS-08 / ARCHETYPE WRAP",
+        "place": "VARANASI / UTTAR PRADESH",
+        "material": "24K GOLD VERMEIL & SHUNGITE",
+        "price": "₹ 38,900",
+        "maker": "Kashi Metal Masters",
+        "story": "Multi-finger spine ring. Raw matte finish that wears down to glowing gold over time.",
+        "x_position": "272vw",
+        "y_position": "38vh",
+        "rotation": "9deg",
+        "parallax_layer": 3,
+        "aspect_ratio": "4/5",
+        "image": "https://images.unsplash.com/photo-1767381819098-4beaccc15a63?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODh8MHwxfHNlYXJjaHwyfHxhcnRpc2FuJTIwc2lsdmVyJTIwZ29sZCUyMGhhbmRtYWRlJTIwamV3ZWxyeSUyMHN0dWRpbyUyMGVkaXRvcmlhbCUyMGRhcmslMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc5MDE2ODcwNHww&ixlib=rb-4.1.0&q=85"
+      }
+    ]
+  },
+  "interactive_states_and_motion": {
+    "hover_effect": "Scale image to 1.08, rotate to 0deg, elevate z-index, dim non-hovered surrounding objects opacity to 0.35, reveal metadata overlay smoothly.",
+    "parallax": "GSAP ScrollTrigger + Lenis smooth scroll ticker alignment. Objects on layer 3 move faster than layer 1.",
+    "cursor": "Subtle custom cursor circle (#C4653A) with drag vector prompt 'DRAG / CLICK'.",
+    "product_view_modal": "Cinematic full-screen overlay (bg #0D0D0D), large photographic focal point, sticky metadata sidebar, ADD TO BAG button with immediate counter update and notification toast.",
+    "menu_overlay": "Full-screen minimal dark overlay, oversized Cormorant Garamond typography links (OBJECTS, ARCHIVE, MANIFESTO, ARTISANS, CONTACT), subtle rust-accented hover underline."
+  },
+  "testing_and_data_testids": {
+    "header_logo": "data-testid=\"header-logo\"",
+    "header_menu_button": "data-testid=\"header-menu-button\"",
+    "header_bag_button": "data-testid=\"header-bag-button\"",
+    "header_bag_count": "data-testid=\"header-bag-count\"",
+    "spatial_canvas": "data-testid=\"spatial-canvas\"",
+    "object_item": "data-testid=\"object-card-${id}\"",
+    "object_hover_metadata": "data-testid=\"object-metadata-${id}\"",
+    "bottom_ui_counter": "data-testid=\"bottom-counter\"",
+    "bottom_ui_drag_cue": "data-testid=\"bottom-drag-cue\"",
+    "product_modal": "data-testid=\"product-detail-modal\"",
+    "product_modal_close": "data-testid=\"product-modal-close-button\"",
+    "product_add_to_bag": "data-testid=\"product-add-to-bag-button\"",
+    "menu_overlay_container": "data-testid=\"menu-overlay\"",
+    "menu_overlay_close": "data-testid=\"menu-overlay-close-button\""
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the dark editorial visual direction: Near-black #0D0D0D, off-white #F4F1EA, rust #C4653A.",
+    "Use JS React files (.js) throughout src/ components.",
+    "Ensure GSAP + Lenis are installed and synced via gsap.ticker for lag-free horizontal parallax dragging.",
+    "Never add standard e-commerce card grids, rounded corners, or bright gold gloss.",
+    "All interactive elements must include specified data-testid attributes."
+  ]
+}
