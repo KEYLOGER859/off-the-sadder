@@ -124,7 +124,7 @@
 .ex-caption {
   position: absolute;
   left: 36px;
-  bottom: 140px;
+  bottom: 150px;
   margin: 0;
   transform-origin: 0 0;
   transform: rotate(-90deg) translateX(-100%);
@@ -598,7 +598,7 @@
 }
 .menu__link {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 28px;
   text-decoration: none;
   color: var(--bone-2);
@@ -616,13 +616,14 @@
   font-size: 10px;
   letter-spacing: 0.22em;
   color: var(--rust);
+  padding-top: 0.55em;
 }
 .menu__line {
   display: block;
   overflow: hidden;
   font-family: var(--font-display);
-  font-size: clamp(56px, 9vw, 140px);
-  line-height: 1;
+  font-size: clamp(48px, 7.2vw, 112px);
+  line-height: 0.98;
   letter-spacing: -0.02em;
 }
 .menu__line-inner {
