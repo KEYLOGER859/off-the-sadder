@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 
-const LINKS = ["Objects", "Makers", "Journal", "About", "Contact"];
+const LINKS = ["Chronicle", "Makers", "Journal", "About", "Contact"];
 
 export const MenuOverlay = ({ open, onClose }) => {
   const ref = useRef(null);

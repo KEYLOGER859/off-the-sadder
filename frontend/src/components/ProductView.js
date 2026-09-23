@@ -2,12 +2,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { formatPrice, pad } from "@/data/products";
 
-export const ProductView = ({ product, index, total, sourceEl, onExitStart, onClosed, onAddToBag }) => {
+export const ProductView = ({ product, index, total, sourceEl, onExitStart, onClosed, onAddToBag, onNavigate }) => {
   const rootRef = useRef(null);
   const frameRef = useRef(null);
   const imgRef = useRef(null);
   const infoRef = useRef(null);
   const closingRef = useRef(false);
+  const firstRef = useRef(true);
   const [added, setAdded] = useState(false);
 
   const sourceTransform = () => {
@@ -25,6 +26,7 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
     };
   };
 
+  // initial open: morph from the source card
   useLayoutEffect(() => {
     const root = rootRef.current;
     const lines = root.querySelectorAll(".pv__line-inner");
@@ -39,6 +41,25 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // prev/next navigation: swap-in animation (no source morph)
+  useLayoutEffect(() => {
+    if (firstRef.current) {
+      firstRef.current = false;
+      return;
+    }
+    const root = rootRef.current;
+    const lines = root.querySelectorAll(".pv__line-inner");
+    const meta = root.querySelectorAll(".pv__reveal");
+    gsap.killTweensOf([imgRef.current, lines, meta]);
+    setAdded(false);
+    const tl = gsap.timeline();
+    tl.fromTo(imgRef.current, { scale: 1.18, opacity: 0.3 }, { scale: 1, opacity: 1, duration: 1.2, ease: "expo.out" }, 0)
+      .fromTo(lines, { yPercent: 110 }, { yPercent: 0, duration: 1, stagger: 0.06, ease: "expo.out" }, 0.05)
+      .fromTo(meta, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.05, ease: "power3.out" }, 0.15);
+    return () => tl.kill();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
+
   const close = () => {
     if (closingRef.current) return;
     closingRef.current = true;
@@ -51,11 +72,15 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
   };
 
   useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && close();
+    const onKey = (e) => {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") onNavigate(1);
+      else if (e.key === "ArrowLeft") onNavigate(-1);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onNavigate]);
 
   const addToBag = () => {
     onAddToBag(product);
@@ -80,10 +105,10 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
       </div>
 
       <aside className="pv__info" ref={infoRef}>
-        <span className="pv__reveal pv__eyebrow">Object {pad(index + 1)}</span>
+        <span className="pv__reveal pv__eyebrow">Chronicle {pad(index + 1)}</span>
         <h2 className="pv__name" data-testid="product-detail-name">
           {product.name.split(" ").map((w, i) => (
-            <span className="pv__line" key={i}>
+            <span className="pv__line" key={`${product.id}-${i}`}>
               <span className="pv__line-inner">{w}</span>
             </span>
           ))}
@@ -102,6 +127,18 @@ export const ProductView = ({ product, index, total, sourceEl, onExitStart, onCl
           </button>
         </div>
       </aside>
+
+      <div className="pv__nav-cluster">
+        <button className="pv__nav pv__nav--prev" onClick={() => onNavigate(-1)} data-testid="product-prev-button" data-cursor="link" type="button">
+          <span className="pv__nav-arrow">←</span>
+          <span>Prev</span>
+        </button>
+        <span className="pv__nav-div" aria-hidden />
+        <button className="pv__nav pv__nav--next" onClick={() => onNavigate(1)} data-testid="product-next-button" data-cursor="link" type="button">
+          <span>Next</span>
+          <span className="pv__nav-arrow">→</span>
+        </button>
+      </div>
     </div>
   );
 };

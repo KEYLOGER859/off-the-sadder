@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { pad } from "@/data/products";
 
-export const Header = ({ bagCount, onMenu }) => {
+export const Header = ({ bagCount, onMenu, onBag }) => {
   const countRef = useRef(null);
   const rootRef = useRef(null);
 
@@ -25,11 +25,11 @@ export const Header = ({ bagCount, onMenu }) => {
         <img src="/logo.png" alt="OFF THE SADDLE" />
       </a>
       <div className="hdr__title" data-testid="header-exhibition-title">
-        <span>Objects</span>
-        <span className="hdr__title-sub">Exhibition 01 — Artisan Jewellery, India</span>
+        <span>Chronicle</span>
+        <span className="hdr__title-sub">Chronicle 01 — Artisan Jewellery, India</span>
       </div>
       <nav className="hdr__nav">
-        <button className="hdr__btn" data-testid="header-bag-button" data-cursor="link" type="button">
+        <button className="hdr__btn" onClick={onBag} data-testid="header-bag-button" data-cursor="link" type="button">
           Bag <span ref={countRef} className="hdr__count" data-testid="header-bag-count">{pad(bagCount)}</span>
         </button>
         <button className="hdr__btn" onClick={onMenu} data-testid="header-menu-button" data-cursor="link" type="button">
