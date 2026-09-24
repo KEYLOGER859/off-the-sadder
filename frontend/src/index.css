@@ -3,13 +3,19 @@
 @tailwind utilities;
 
 :root {
-    --ink: #0d0d0d;
-    --ink-2: #141414;
+    --ink: #070707;
+    --ink-2: #111010;
     --bone: #f4f1ea;
     --bone-2: #a3a099;
     --bone-3: #66645f;
     --rust: #c4653a;
     --rust-2: #d15a2a;
+    --sand: #cbb088;
+    --cream: #efe9dd;
+    --cream-2: #e6dccb;
+    --cream-line: rgba(32, 26, 20, 0.14);
+    --earth: #201a14;
+    --earth-2: #5c5348;
     --line: rgba(244, 241, 234, 0.1);
     --font-display: "Instrument Serif", Georgia, serif;
     --font-mono: "DM Mono", "SFMono-Regular", Menlo, monospace;
@@ -20,6 +26,14 @@ html {
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+}
+html.scroll-y {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+}
+html.scroll-y body {
+    height: auto;
 }
 html,
 body {
